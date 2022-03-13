@@ -1,1 +1,85 @@
-test
+//  Skenario :
+//  1. Peminjam dengan keanggotaan mengembalikan buku tepat waktu
+//  2. Peminjam tanpa keanggotaan mengembalikan buku tepat waktu
+//  3. Peminjam dengan kanggotaan mengembalikan buku terlambat
+//  4. Peminjam tanpa keanggotaan mengembalikan buku terlambat
+
+
+class Perpustakaan {
+
+    // Atribut
+    String nama;
+    int nik;
+    int noAnggota = 0;
+    int tanggalPinjam;
+    int bulanPinjam;
+    int tanggalKembali;
+    int bulanKembali;
+    int denda = 0;
+
+    // Constructor Default
+    public Perpustakaan() {
+    }
+
+    // Constructor untuk Peminjaman dengan Keanggotaan
+    public Perpustakaan(String nama, int nik, int noAnggota, int tanggalPinjam, int bulanPinjam, int tanggalKembali, int bulanKembali) {
+        this.nama = nama;
+        this.nik = nik;
+        this.noAnggota = noAnggota;
+        this.tanggalPinjam = tanggalPinjam;
+        this.bulanPinjam = bulanPinjam;
+        this.tanggalKembali = tanggalKembali;
+        this.bulanKembali = bulanKembali;
+    }
+
+    // Constructor untuk Peminjaman Non Keanggotaan
+    public Perpustakaan(String nama, int nik, int tanggalPinjam, int bulanPinjam, int tanggalKembali, int bulanKembali) {
+        this.nama = nama;
+        this.nik = nik;
+        this.tanggalPinjam = tanggalPinjam;
+        this.bulanPinjam = bulanPinjam;
+        this.tanggalKembali = tanggalKembali;
+        this.bulanKembali = bulanKembali;
+    }
+
+    // Method Pengembalian Buku Khusus Keanggotaan
+    public void pengembalian(int denda, int dendaTotal, int noAnggota) {
+        if (tanggalPinjam + 7 != tanggalKembali && noAnggota != 0) {
+            denda = 10000;
+            dendaTotal = 10000 * (tanggalKembali - 7);
+            output(dendaTotal);
+            System.out.println("Anda dikenakan denda karena telah melebihi batas peminjaman " + (tanggalKembali - 7) + " hari.");
+        } else {
+            pengembalian(denda);
+        }
+    }
+
+    // Method Pengembalian Buku Tanpa Keanggotaan
+    public void pengembalian(int denda, int dendaTotal) {
+        if (tanggalPinjam + 3 != tanggalKembali) {
+            denda = 10000;
+            dendaTotal = 10000 * (tanggalKembali - 3);
+            output(dendaTotal);
+            System.out.println("Anda dikenakan denda karena telah melebihi batas peminjaman " + (tanggalKembali - 3) + " hari.");
+        } else {
+            pengembalian(denda);
+        }
+    }
+
+    
+    public void output(int denda) {
+        System.out.println("---------- NOTA PENGEMBALIAN BUKU ----------");
+        System.out.println("Nama                 : " + this.nama);
+        System.out.println("NIK                  : " + this.nik);
+        System.out.println("Tanggal Peminjaman   : " + this.tanggalPinjam + " - " + this.bulanPinjam);
+        System.out.println("Tanggal Pengembalian : " + this.tanggalKembali + " - " + this.bulanKembali);
+
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Perpustakaan org1 = new Perpustakaan("Aba", 1234567890, 0001, 1, 1, 8, 1);
+        System.out.println(org1.output());
+    }
+}
